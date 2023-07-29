@@ -1,5 +1,6 @@
 import 'package:firebase_app/cubit/sign_cubit/cubit.dart';
 import 'package:firebase_app/cubit/sign_cubit/states.dart';
+import 'package:firebase_app/layout/layout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,12 @@ class SignScreen extends StatelessWidget {
       create: (context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit,RegisterStates>(
         listener: (context, state) {
-
+      if (state is CreateUserSuccessState){
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LayoutScreen(),),
+                (Route <dynamic>route) => false);
+      }
         },
         builder: (context, state) {
           return Scaffold(

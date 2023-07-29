@@ -42,6 +42,8 @@ dependencies:
   firebase_auth: ^4.7.2
   google_nav_bar: ^5.0.6
   conditional_builder_null_safety: ^0.0.6
+  cloud_firestore: ^4.8.4
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,9 @@ flutter:
     - family: IconBroken
       fonts:
         - asset: assets/fonts/icons.ttf
+    - family: Jannah
+      fonts:
+        - asset: assets/fonts/jannah (1).ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -3,6 +3,7 @@ import 'package:firebase_app/cubit/login_cubit/cubit.dart';
 import 'package:firebase_app/cubit/login_cubit/states.dart';
 import 'package:firebase_app/layout/layout_screen.dart';
 import 'package:firebase_app/modules/sign_up_screen.dart';
+import 'package:firebase_app/network/local/shared_preference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,18 @@ class LoginScreen extends StatelessWidget {
       create: (context) =>LoginCubit() ,
       child: BlocConsumer<LoginCubit,LoginStates>(
         listener: (context, state) {
+  if (state is UserLoginSuccessState){
 
+
+    CacheHelper.saveData(key: 'uId',
+        value: state.uId)
+        .then((value) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LayoutScreen(),),
+              (Route <dynamic>route) => false);
+    });
+  }
         },
         builder: (context, state) {
           return Scaffold(
@@ -90,7 +102,6 @@ class LoginScreen extends StatelessWidget {
                               child: MaterialButton(
                                 onPressed: () {
                                   LoginCubit.get(context).userLogin(email: email.text, password: password.text);
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LayoutScreen(),));
                                 },
                                 child: defaultText(text: 'Login', fontSize: 16, color: Colors.white),
                               ),

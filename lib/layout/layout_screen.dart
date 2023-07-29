@@ -17,7 +17,7 @@ class LayoutScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           bottomNavigationBar: Padding(
-            padding: EdgeInsets.symmetric(vertical: 30.0),
+            padding: EdgeInsets.only(bottom: 30.0),
             child: GNav(
               gap: 8,
               activeColor: Colors.white,
@@ -38,6 +38,7 @@ class LayoutScreen extends StatelessWidget {
               },
             ),
           ),
+          body: AppCubit.get(context).screen[AppCubit.get(context).currentBottomNavIndex],
         );
       },
     );
