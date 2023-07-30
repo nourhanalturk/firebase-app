@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:firebase_app/cubit/app_cubit/cubit.dart';
 import 'package:firebase_app/cubit/app_cubit/states.dart';
 import 'package:firebase_app/models/home_model.dart';
+import 'package:firebase_app/modules/recipe_screen.dart';
 import 'package:firebase_app/sharing/component/component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       fallback: (context) => Center(child: CircularProgressIndicator()),
-                    )
+                    ),
 
 
                   ],
@@ -100,26 +101,31 @@ class HomeScreen extends StatelessWidget {
     );
   }
   Widget buildBreakfastContainer(context,HomeModel homeModel){
-    return Column(
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height *0.22,
-          width: 180.0,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
+    return InkWell(
+      onTap: (){
+       Navigator.push(context, MaterialPageRoute(builder:  (context) => RecipeScreen(recipeId: homeModel.uId),));
+      },
+      child: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height *0.22,
+            width: 180.0,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Image(
+              image: NetworkImage( homeModel.breakfastImg!),
+              fit: BoxFit.cover,
+
+
+            ),
           ),
-          child: Image(
-            image: NetworkImage( homeModel.breakfastImg!),
-            fit: BoxFit.cover,
+          const SizedBox(height: 8.0,),
+          defaultText(text: homeModel.breakfastDesc!, fontSize: 16.0, color: Colors.grey)
 
-
-          ),
-        ),
-        const SizedBox(height: 8.0,),
-        defaultText(text: homeModel.breakfastDesc!, fontSize: 16.0, color: Colors.grey)
-
-      ],
+        ],
+      ),
     );
   }
 }

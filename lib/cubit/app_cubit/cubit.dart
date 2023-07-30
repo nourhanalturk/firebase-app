@@ -42,11 +42,32 @@ class AppCubit extends Cubit<AppStates>{
         breakfastInfo.add(HomeModel.fromJson(element.data()));
       });
       emit(GetHomeDataSuccessState());
+      //print( breakfastInfo[1].uId);
+
 
     })
         .catchError((error){
       emit(GetHomeDataErrorState(error.toString()));
+      print(error.toString());
     });
   }
+
+  bool homeButtonIngredients = false;
+  bool homeButtonRecipe = false;
+  String buttonIdentifier = 'Ingredients';
+
+
+  void changeSelectedHomeButton(String buttonIdentifier) {
+    this.buttonIdentifier = buttonIdentifier ;
+    if (buttonIdentifier == 'Ingredients') {
+      homeButtonIngredients = true;
+      homeButtonRecipe = false;
+    } else if (buttonIdentifier == 'Recipe') {
+      homeButtonIngredients = false;
+      homeButtonRecipe = true;
+    }
+    emit(ChangeSelectedHomeButtonState());
+  }
+
 
 }

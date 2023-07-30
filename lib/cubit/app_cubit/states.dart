@@ -6,5 +6,6 @@ class GetHomeDataErrorState extends AppStates {
   final error;
   GetHomeDataErrorState(this.error);
 }
+class ChangeSelectedHomeButtonState extends AppStates{}
 
 
