@@ -4,6 +4,7 @@ import 'package:firebase_app/layout/layout_screen.dart';
 import 'package:firebase_app/modules/login_screen.dart';
 import 'package:firebase_app/network/local/shared_preference.dart';
 import 'package:firebase_app/sharing/bloc_observer.dart';
+import 'package:firebase_app/sharing/constance.dart';
 import 'package:firebase_app/style/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ void main()async {
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
-  var uId = CacheHelper.getData(key: 'uId') ;
+   uId = CacheHelper.getData(key: 'uId') ;
   print(uId);
   Widget startWidget ;
   if(uId !=null){
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppCubit()..getHomeData(),
+      create: (context) => AppCubit()..getHomeData()..getUserData(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appThemeData,

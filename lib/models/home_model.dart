@@ -1,12 +1,13 @@
 class HomeModel {
   String? breakfastDesc ;
   String? breakfastImg ;
+  String? userUid;
   String? uId;
   String? name;
-  double? calories ;
-  double? fats;
-  double? time;
-  double? proteins;
+  String? calories ;
+  String? fats;
+  String? time;
+  String? proteins;
   String? recipe ;
 
 
@@ -14,6 +15,7 @@ class HomeModel {
     this.breakfastDesc,
     this.breakfastImg,
     this.uId,
+    this.userUid,
     this.name,
     this.calories,
     this.fats,
@@ -27,11 +29,13 @@ class HomeModel {
     breakfastImg = json['breakfastImg'];
     uId = json['uId'];
     name = json['name'];
-    calories = json['calories'].toDouble();
-    fats = json['fats'].toDouble();
-    proteins = json['proteins'].toDouble();
-    time = json['time'].toDouble();
+    calories = json['calories'];
+    fats = json['fats'];
+    proteins = json['proteins'];
+    time = json['time'];
     recipe = json['Recipe'];
+    userUid = json['userUid'];
+
   }
 
   Map<String,dynamic> toMap (){
@@ -45,7 +49,7 @@ class HomeModel {
       'proteins':proteins,
       'time':time,
       'Recipe': recipe,
-
+      'userUid':userUid ,
     };
   }
 
