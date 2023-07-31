@@ -111,8 +111,9 @@ class AddScreen extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
-                                hintText: 'Ingredient 1',
+                                hintText: 'Calories',
                                 fillColor: Colors.grey,
+                                enabled: false ,
 
                               ),
                             ),
@@ -145,9 +146,9 @@ class AddScreen extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
-                                hintText: 'Ingredient 2',
+                                hintText: 'Proteins',
                                 fillColor: Colors.grey,
-
+                                enabled: false
                               ),
                             ),
                           ),
@@ -179,9 +180,9 @@ class AddScreen extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
-                                hintText: 'Ingredient 3',
+                                hintText: 'Fats',
                                 fillColor: Colors.grey,
-
+                                enabled: false ,
                               ),
                             ),
                           ),

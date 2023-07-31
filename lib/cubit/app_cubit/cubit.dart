@@ -124,12 +124,7 @@ class AppCubit extends Cubit<AppStates> {
     required String time,
   }) async {
     emit(UploadRecipeImageLoadingState());
-
-    // Add your existing code for getting the image here
-    // ...
-
     try {
-      // Upload the image to Firebase Storage and get the download URL
       final uploadTaskSnapshot = await firebase_storage.FirebaseStorage
           .instance
           .ref()
@@ -137,31 +132,29 @@ class AppCubit extends Cubit<AppStates> {
           .putFile(recipeImage!);
 
       final downloadUrl = await uploadTaskSnapshot.ref.getDownloadURL();
+      String recipeUid = FirebaseFirestore.instance.collection('home').doc().id;
 
-      // Create a HomeModel object with the data from the Add Screen
       final homeModel = HomeModel(
         breakfastDesc: breakfastDesc,
         breakfastImg: downloadUrl,
-        uId: userModel!.uId, // Replace userId with the actual user ID
-        name:breakfastDesc ,
+        userUid: userModel!.uId,
+        name:userModel!.name ,
         calories: ingredient1Amount,
         fats:ingredient2Amount,
         proteins:ingredient3Amount,
         time: time,
         recipe: recipe,
+        uId: recipeUid,
       );
-
-      // Save the HomeModel data to the "home" collection in Firestore
       await FirebaseFirestore.instance.collection('home').add(homeModel.toMap());
 
-      // Notify the UI that the upload is successful
       emit(UploadRecipeImageSuccessState());
     } catch (error) {
-      // Handle any errors that occur during the upload process
       print(error.toString());
       emit(UploadRecipeImageErrorState());
     }
   }
+
 
 
   // void uploadRecipeImage({
