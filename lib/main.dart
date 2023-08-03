@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_app/cubit/app_cubit/cubit.dart';
 import 'package:firebase_app/layout/layout_screen.dart';
+import 'package:firebase_app/modules/feedback_screen.dart';
 import 'package:firebase_app/modules/login_screen.dart';
 import 'package:firebase_app/network/local/shared_preference.dart';
 import 'package:firebase_app/sharing/bloc_observer.dart';

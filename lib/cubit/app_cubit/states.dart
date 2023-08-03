@@ -6,6 +6,13 @@ class GetHomeDataErrorState extends AppStates {
   final error;
   GetHomeDataErrorState(this.error);
 }
+
+class GetFeedDataSuccessState extends AppStates {}
+class GetFeedDataErrorState extends AppStates {
+  final error;
+  GetFeedDataErrorState(this.error);
+}
+
 class ChangeSelectedHomeButtonState extends AppStates{}
 
 class CreateNewRecipeLoadingState extends AppStates {}

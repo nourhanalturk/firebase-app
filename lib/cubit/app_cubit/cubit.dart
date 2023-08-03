@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/cubit/app_cubit/states.dart';
@@ -9,10 +8,10 @@ import 'package:firebase_app/modules/feedback_screen.dart';
 import 'package:firebase_app/modules/home_screen.dart';
 import 'package:firebase_app/modules/profile_screen.dart';
 import 'package:firebase_app/modules/search_screen.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../models/feed_model.dart';
 import '../../models/home_model.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -27,6 +26,9 @@ class AppCubit extends Cubit<AppStates> {
   int currentBottomNavIndex = 0;
 
   void changeBottomNavBar(int index) {
+    if(index==3){
+      getFeedData();
+    }
     currentBottomNavIndex = index;
     emit(ChangeBottomNavBarIndexState());
   }
@@ -76,6 +78,30 @@ class AppCubit extends Cubit<AppStates> {
     })
         .catchError((error) {
       emit(GetHomeDataErrorState(error.toString()));
+      print(error.toString());
+    });
+  }
+
+  List<FeedModel> feed = [];
+  int profilePublication =0;
+  int profileFollowing =0;
+  int profileFollowers =0;
+
+
+  void getFeedData() {
+    FirebaseFirestore.instance
+        .collection('feed')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        breakfastId.add(element.id);
+        feed.add(FeedModel.fromJson(element.data()));
+      });
+      emit(GetFeedDataSuccessState());
+      //print( breakfastInfo[1].uId);
+    })
+        .catchError((error) {
+      emit(GetFeedDataErrorState(error.toString()));
       print(error.toString());
     });
   }
@@ -155,8 +181,6 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
-
-
   // void uploadRecipeImage({
   //   required breakfastDesc,
   //   String? breakfastImg ,
@@ -198,100 +222,41 @@ class AppCubit extends Cubit<AppStates> {
   //   });
   // }
 
-  void createNewRecipe({
-    required breakfastDesc,
-    String? recipeImage ,
-    required ingredient1Amount,
-    required ingredient2Amount,
-    required ingredient3Amount,
-    required recipe,
-    required time,
-  }) {
-    emit(CreateNewRecipeLoadingState());
-    HomeModel model = HomeModel(
-      name: userModel!.name,
-      breakfastDesc: breakfastDesc,
-      calories: ingredient1Amount,
-      proteins: ingredient2Amount,
-      fats: ingredient3Amount,
-      recipe: recipe,
-      time: time,
-      userUid: userModel!.uId,
-     breakfastImg: recipeImage?? ''
-    );
-
-    FirebaseFirestore
-        .instance
-        .collection('home')
-        .add(model.toMap())
-        .then((value) {
-      emit(CreateNewRecipeSuccessState());
-    })
-        .catchError((error) {
-      print(error.toString());
-      emit(CreateNewRecipeErrorState(error.toString()));
-    });
-  }
+  // void createNewRecipe({
+  //   required breakfastDesc,
+  //   String? recipeImage ,
+  //   required ingredient1Amount,
+  //   required ingredient2Amount,
+  //   required ingredient3Amount,
+  //   required recipe,
+  //   required time,
+  // }) {
+  //   emit(CreateNewRecipeLoadingState());
+  //   HomeModel model = HomeModel(
+  //     name: userModel!.name,
+  //     breakfastDesc: breakfastDesc,
+  //     calories: ingredient1Amount,
+  //     proteins: ingredient2Amount,
+  //     fats: ingredient3Amount,
+  //     recipe: recipe,
+  //     time: time,
+  //     userUid: userModel!.uId,
+  //    breakfastImg: recipeImage?? ''
+  //   );
+  //
+  //   FirebaseFirestore
+  //       .instance
+  //       .collection('home')
+  //       .add(model.toMap())
+  //       .then((value) {
+  //     emit(CreateNewRecipeSuccessState());
+  //   })
+  //       .catchError((error) {
+  //     print(error.toString());
+  //     emit(CreateNewRecipeErrorState(error.toString()));
+  //   });
+  // }
 
 }
 
 
-// void uploadPostImage(
-//     {
-//       required text,
-//       required dateTime,
-//
-//     })
-// {
-//   emit(SocialCreatePostLoadingState());
-//   firebase_storage.FirebaseStorage
-//       .instance
-//       .ref()
-//       .child('posts/${Uri.file(postImage!.path).pathSegments.last}')
-//       .putFile(postImage!)
-//       .then((value){
-//     value.ref.getDownloadURL()
-//         .then((value) {
-//       createPost(text: text, dateTime: dateTime,postImage: value);
-//       print(value);
-//     }).catchError((error){
-//       emit(SocialCreatePostErrorState());
-//
-//     });
-//   })
-//       .catchError((error){
-//     emit(SocialCreatePostErrorState());
-//
-//   });
-//
-// }
-//
-// void createPost({
-//
-//   required text,
-//   required dateTime,
-//   String? postImage
-// }){
-//   emit(SocialCreatePostLoadingState());
-//
-//   PostModel model = PostModel(
-//       name: socialUsersModel!.name,
-//       image:socialUsersModel!.image,
-//       uId: socialUsersModel!.uId,
-//       text: text,
-//       dateTime: dateTime,
-//       postImage: postImage??''
-//   );
-//
-//   FirebaseFirestore
-//       .instance
-//       .collection('posts')
-//       .add(model.toMap())
-//       .then((value) {
-//     emit(SocialCreatePostSuccessState());
-//
-//   })
-//       .catchError((error){
-//     emit(SocialCreatePostErrorState());
-//   });
-// }

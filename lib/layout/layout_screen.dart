@@ -27,9 +27,9 @@ class LayoutScreen extends StatelessWidget {
               tabBackgroundColor: Colors.deepOrange,
               tabs: [
                 GButton(icon: IconBroken.Home, text: 'Home'),
-                GButton(icon: IconBroken.Search, text: 'Home'),
-                GButton(icon: IconBroken.Upload, text: 'Home'),
-                GButton(icon: Icons.list, text: 'Search'),
+                GButton(icon: IconBroken.Search, text: 'Search'),
+                GButton(icon: IconBroken.Upload, text: 'post'),
+                GButton(icon: Icons.list, text: 'Feed'),
                 GButton(icon: IconBroken.Profile, text: 'Profile'),
               ],
               selectedIndex: AppCubit.get(context).currentBottomNavIndex,
