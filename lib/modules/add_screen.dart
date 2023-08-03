@@ -253,6 +253,11 @@ class AddScreen extends StatelessWidget {
                                time: timeController.text,
 
                            );
+                           ScaffoldMessenger.of(context).showSnackBar(
+                             SnackBar(
+                               content: Text('Recipe added to favorites!'),
+                             ),
+                           );
                             },
                             child: Text('add',style: TextStyle(color: Colors.white),),))
 

@@ -31,7 +31,7 @@ class RecipeScreen extends StatelessWidget {
               CustomScrollView(
         slivers: [
                 SliverAppBar(
-                   expandedHeight: MediaQuery.of(context).size.height / 1, // Set the height for the image
+                   expandedHeight: MediaQuery.of(context).size.height / 1,
                    floating: false,
                    pinned: false,
                   flexibleSpace: FlexibleSpaceBar(
@@ -79,7 +79,9 @@ class RecipeScreen extends StatelessWidget {
                                   defaultText(text: 'By ', fontSize: 16.0, color: Colors.grey),
                                   defaultText(text: '${model.name!}', fontSize: 16.0, color: Colors.deepOrange),
                                   Spacer(),
-                                  TextButton(onPressed: (){},
+                                  TextButton(onPressed: (){
+                                   AppCubit.get(context).addToFollowing(model);
+                                  },
                                       child: defaultText(text: '+Follow', fontSize: 16.0, color: Colors.deepOrange),
                                   )
 
@@ -94,7 +96,14 @@ class RecipeScreen extends StatelessWidget {
                   ),
                   leading: IconButton(onPressed: (){Navigator.pop(context, MaterialPageRoute(builder:  (context) =>HomeScreen() ));}, icon: Icon(Icons.arrow_back_sharp,color: Colors.deepOrange,)) ,
                   actions: [
-                  IconButton(onPressed: (){}, icon: Icon(IconBroken.Heart,color: Colors.white,size: 30.0,))
+                  IconButton(onPressed: (){
+                    AppCubit.get(context).addFavoriteRecipe(model);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Recipe added to favorites'),
+                      ),
+                    );
+                  }, icon: Icon(IconBroken.Heart,color: Colors.white,size: 30.0,))
                ],
               ),
         ],

@@ -17,6 +17,7 @@ void main()async {
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
    uId = CacheHelper.getData(key: 'uId') ;
+  runApp(MyApp());
   print(uId);
   Widget startWidget ;
   if(uId !=null){
@@ -26,13 +27,14 @@ void main()async {
   }
   runApp( MyApp(
     startWidget: startWidget,
-  ));
+ ));
 }
 
 class MyApp extends StatelessWidget {
   final Widget? startWidget ;
+
   const MyApp({
-    this.startWidget
+    this.startWidget,
 });
 
   @override

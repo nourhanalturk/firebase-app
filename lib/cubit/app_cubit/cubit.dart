@@ -15,6 +15,7 @@ import '../../models/feed_model.dart';
 import '../../models/home_model.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../../network/local/shared_preference.dart';
 import '../../sharing/constance.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -24,6 +25,11 @@ class AppCubit extends Cubit<AppStates> {
 
 
   int currentBottomNavIndex = 0;
+
+
+  int profilePublication =0;
+  int profileFollowing =0;
+  int profileFollowers =0;
 
   void changeBottomNavBar(int index) {
     if(index==3){
@@ -73,7 +79,10 @@ class AppCubit extends Cubit<AppStates> {
       });
       emit(GetHomeDataSuccessState());
       //print( breakfastInfo[1].uId);
-
+      for(int i=0;i<breakfastInfo.length ;i++ ){
+      if(userModel!.uId ==breakfastInfo[i].userUid )
+        profilePublication = breakfastInfo.length;
+      }
 
     })
         .catchError((error) {
@@ -83,9 +92,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   List<FeedModel> feed = [];
-  int profilePublication =0;
-  int profileFollowing =0;
-  int profileFollowers =0;
+
 
 
   void getFeedData() {
@@ -132,10 +139,8 @@ class AppCubit extends Cubit<AppStates> {
     if (pickedFile != null) {
       recipeImage = File(pickedFile.path);
       final String referencePath = 'home/${Uri.file(recipeImage!.path).pathSegments.last}';
-      print('Reference Path: $referencePath');
       emit(RecipeImagePickedSuccessState());
     } else {
-      print('no Image selected');
       emit(RecipeImagePickedErrorState());
     }
   }
@@ -180,6 +185,30 @@ class AppCubit extends Cubit<AppStates> {
       emit(UploadRecipeImageErrorState());
     }
   }
+
+  List<HomeModel> favoriteRecipes = [];
+
+
+  void addFavoriteRecipe(HomeModel recipe)  {
+    favoriteRecipes.add(recipe);
+    emit(AddFavoriteRecipeState());
+  }
+
+  List<HomeModel> publishedRecipes = [];
+  void addPublishedRecipe(HomeModel model)  {
+    publishedRecipes.add(model);
+    emit(AddPublishedRecipeState());
+  }
+
+  List followingId = [];
+  void addToFollowing(HomeModel model){
+  followingId.add(model.userUid);
+  profileFollowing++ ;
+  emit(AddToFollowingState());
+  }
+
+}
+
 
   // void uploadRecipeImage({
   //   required breakfastDesc,
@@ -257,6 +286,6 @@ class AppCubit extends Cubit<AppStates> {
   //   });
   // }
 
-}
+
 
 

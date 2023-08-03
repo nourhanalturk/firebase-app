@@ -40,7 +40,7 @@ class FeedbackScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => buildFeeds(AppCubit.get(context).feed[index]),
+                      itemBuilder: (context, index) => buildFeeds(AppCubit.get(context).feed[index],context),
                       separatorBuilder: (context, index) => const SizedBox(height: 15.0,),
                       itemCount:AppCubit.get(context).feed.length
                   ),
@@ -53,7 +53,7 @@ class FeedbackScreen extends StatelessWidget {
       },
     );
   }
-  Widget buildFeeds (FeedModel feed){
+  Widget buildFeeds (FeedModel feed,context){
     return
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,13 +75,17 @@ class FeedbackScreen extends StatelessWidget {
             defaultText(text: feed.userName!, fontSize: 18.0, color: Colors.black),
             Spacer(),
             IconButton(
-              onPressed: (){},
-              icon: Icon(IconBroken.Heart,size: 30.0,),color: Colors.deepOrange,)
+              onPressed: (){
+
+              },
+              icon: Icon(IconBroken.Heart,size: 30.0,),color: Colors.deepOrange,
+            )
           ],
         ),
         const SizedBox(
           height: 10.0
-          ,),
+          ,)
+        ,
         Container(
           width: double.infinity,
           decoration: BoxDecoration(

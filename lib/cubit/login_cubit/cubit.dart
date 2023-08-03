@@ -17,6 +17,7 @@ class LoginCubit extends Cubit<LoginStates>{
         email: email,
         password: password
     ).then((value) {
+      print(value.user!.uid);
       emit(UserLoginSuccessState(value.user!.uid));
     }).catchError((error){
       emit(UserLoginErrorState());

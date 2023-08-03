@@ -13,6 +13,7 @@ class GetFeedDataErrorState extends AppStates {
   GetFeedDataErrorState(this.error);
 }
 
+
 class ChangeSelectedHomeButtonState extends AppStates{}
 
 class CreateNewRecipeLoadingState extends AppStates {}
@@ -34,6 +35,10 @@ class GetUserModelDataErrorState extends AppStates{
 class UploadRecipeImageLoadingState extends AppStates{}
 class UploadRecipeImageSuccessState extends AppStates{}
 class UploadRecipeImageErrorState extends AppStates{}
+class AddFavoriteRecipeState extends AppStates{}
+class AddPublishedRecipeState extends AppStates{}
+class AddToFollowingState extends AppStates{}
+
 
 
 
