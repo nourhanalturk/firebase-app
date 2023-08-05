@@ -15,7 +15,7 @@ void main()async {
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
-   uId = CacheHelper.getData(key: 'uId') ;
+   uId = CacheHelper.getData(key: 'uId') ?? '' ;
   print(uId);
   Widget startWidget ;
   if(uId !=null){
