@@ -14,15 +14,12 @@ import 'package:image_picker/image_picker.dart';
 import '../../models/feed_model.dart';
 import '../../models/home_model.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
-import '../../network/local/shared_preference.dart';
 import '../../sharing/constance.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() :super(InitState());
 
   static AppCubit get(context) => BlocProvider.of(context);
-
 
   int currentBottomNavIndex = 0;
 
@@ -51,6 +48,7 @@ class AppCubit extends Cubit<AppStates> {
 
   void getUserData() {
     emit(GetUserModelDataLoadingState());
+    print('this is the uId $uId');
     FirebaseFirestore.instance
         .collection('users')
         .doc(uId)
@@ -93,8 +91,6 @@ class AppCubit extends Cubit<AppStates> {
 
   List<FeedModel> feed = [];
 
-
-
   void getFeedData() {
     FirebaseFirestore.instance
         .collection('feed')
@@ -116,7 +112,6 @@ class AppCubit extends Cubit<AppStates> {
   bool homeButtonIngredients = false;
   bool homeButtonRecipe = false;
   String buttonIdentifier = 'Ingredients';
-
 
   void changeSelectedHomeButton(String buttonIdentifier) {
     this.buttonIdentifier = buttonIdentifier;

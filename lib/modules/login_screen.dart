@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../sharing/component/component.dart';
+import '../sharing/constance.dart';
 import '../style/colors/colors.dart';
 import '../style/iconBroken/iconBroken.dart';
 import '../style/loginWave/loginWaveStyle.dart';
@@ -31,6 +32,8 @@ class LoginScreen extends StatelessWidget {
     CacheHelper.saveData(key: 'uId',
         value: state.uId)
         .then((value) {
+           uId = CacheHelper.getData(key: 'uId');
+          print(uId);
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => LayoutScreen(),),

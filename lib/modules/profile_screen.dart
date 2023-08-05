@@ -147,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                           itemCount: AppCubit.get(context).breakfastInfo.length,
                           itemBuilder: (context, index) {
                             final model = AppCubit.get(context).breakfastInfo[index];
-                            if(model.userUid == uId) {
+                            if(model.userUid == CacheHelper.getData(key: 'uId')) {
                               return Column(
                               children: [
                                 Container(

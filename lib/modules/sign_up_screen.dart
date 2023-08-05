@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../network/local/shared_preference.dart';
 import '../sharing/component/component.dart';
+import '../sharing/constance.dart';
 import '../style/colors/colors.dart';
 import '../style/iconBroken/iconBroken.dart';
 import '../style/loginWave/loginWaveStyle.dart';
@@ -26,10 +28,16 @@ class SignScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit,RegisterStates>(
         listener: (context, state) {
       if (state is CreateUserSuccessState){
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LayoutScreen(),),
-                (Route <dynamic>route) => false);
+        CacheHelper.saveData(key: 'uId',
+            value: state.uId)
+            .then((value) {
+          uId = CacheHelper.getData(key: 'uId');
+          print(uId);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LayoutScreen(),),
+                  (Route <dynamic>route) => false);
+        });
       }
         },
         builder: (context, state) {
@@ -105,7 +113,8 @@ class SignScreen extends StatelessWidget {
                                       name: name.text,
                                       email: email.text,
                                       phone: phone.text,
-                                      password: password.text
+                                      password: password.text,
+
                                   );
                                 },
                                 child: defaultText(text: 'Sign', fontSize: 16, color: Colors.white),

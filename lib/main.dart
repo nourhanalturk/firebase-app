@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_app/cubit/app_cubit/cubit.dart';
 import 'package:firebase_app/layout/layout_screen.dart';
-import 'package:firebase_app/modules/feedback_screen.dart';
 import 'package:firebase_app/modules/login_screen.dart';
 import 'package:firebase_app/network/local/shared_preference.dart';
 import 'package:firebase_app/sharing/bloc_observer.dart';
@@ -17,7 +16,6 @@ void main()async {
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
    uId = CacheHelper.getData(key: 'uId') ;
-  runApp(MyApp());
   print(uId);
   Widget startWidget ;
   if(uId !=null){
@@ -44,7 +42,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appThemeData,
-        home: startWidget,
+        home: LoginScreen(),
       ),
     );
   }
