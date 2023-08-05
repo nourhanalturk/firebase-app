@@ -13,6 +13,7 @@ class LoginCubit extends Cubit<LoginStates>{
     required password
   })
    {
+     emit(UserLoginLoadingState());
     FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password

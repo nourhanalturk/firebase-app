@@ -30,6 +30,7 @@ class AppCubit extends Cubit<AppStates> {
 
   void changeBottomNavBar(int index) {
     if(index==3){
+      if(feed.isEmpty)
       getFeedData();
     }
     currentBottomNavIndex = index;
@@ -205,81 +206,7 @@ class AppCubit extends Cubit<AppStates> {
 }
 
 
-  // void uploadRecipeImage({
-  //   required breakfastDesc,
-  //   String? breakfastImg ,
-  //   required ingredient1Amount,
-  //   required ingredient2Amount,
-  //   required ingredient3Amount,
-  //   required recipe,
-  //   required time,
-  // }) {
-  //   emit(UploadRecipeImageLoadingState());
-  //   firebase_storage.FirebaseStorage
-  //       .instance
-  //       .ref()
-  //       .child('home/${Uri
-  //       .file(recipeImage!.path)
-  //       .pathSegments
-  //       .last}')
-  //       .putFile(recipeImage!)
-  //       .then((value) {
-  //     value.ref.getDownloadURL()
-  //         .then((value) {
-  //           createNewRecipe(
-  //               breakfastDesc: breakfastDesc,
-  //               ingredient1Amount: ingredient1Amount,
-  //               ingredient2Amount: ingredient2Amount,
-  //               ingredient3Amount: ingredient3Amount,
-  //               recipe: recipe,
-  //               time: time,
-  //             recipeImage:value ,
-  //           );
-  //       print(value);
-  //     }).catchError((error) {
-  //       emit(UploadRecipeImageSuccessState());
-  //     });
-  //   })
-  //       .catchError((error) {
-  //         print(error.toString());
-  //     emit(UploadRecipeImageErrorState());
-  //   });
-  // }
 
-  // void createNewRecipe({
-  //   required breakfastDesc,
-  //   String? recipeImage ,
-  //   required ingredient1Amount,
-  //   required ingredient2Amount,
-  //   required ingredient3Amount,
-  //   required recipe,
-  //   required time,
-  // }) {
-  //   emit(CreateNewRecipeLoadingState());
-  //   HomeModel model = HomeModel(
-  //     name: userModel!.name,
-  //     breakfastDesc: breakfastDesc,
-  //     calories: ingredient1Amount,
-  //     proteins: ingredient2Amount,
-  //     fats: ingredient3Amount,
-  //     recipe: recipe,
-  //     time: time,
-  //     userUid: userModel!.uId,
-  //    breakfastImg: recipeImage?? ''
-  //   );
-  //
-  //   FirebaseFirestore
-  //       .instance
-  //       .collection('home')
-  //       .add(model.toMap())
-  //       .then((value) {
-  //     emit(CreateNewRecipeSuccessState());
-  //   })
-  //       .catchError((error) {
-  //     print(error.toString());
-  //     emit(CreateNewRecipeErrorState(error.toString()));
-  //   });
-  // }
 
 
 

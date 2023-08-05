@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase_app/cubit/sign_cubit/cubit.dart';
 import 'package:firebase_app/cubit/sign_cubit/states.dart';
 import 'package:firebase_app/layout/layout_screen.dart';
@@ -107,18 +108,21 @@ class SignScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.white10,
                               ),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  RegisterCubit.get(context).userRegister(
-                                      name: name.text,
-                                      email: email.text,
-                                      phone: phone.text,
-                                      password: password.text,
+                              child: ConditionalBuilder(
+                                  condition: state is ! UserRegisterLoadingState,
+                                  builder: (context) => MaterialButton(
+                                    onPressed: () {
+                                      RegisterCubit.get(context).userRegister(
+                                        name: name.text,
+                                        email: email.text,
+                                        phone: phone.text,
+                                        password: password.text,
 
-                                  );
-                                },
-                                child: defaultText(text: 'Sign', fontSize: 16, color: Colors.white),
-                              ),
+                                      );
+                                    },
+                                    child: defaultText(text: 'Sign', fontSize: 16, color: Colors.white),
+                                  ),
+                                  fallback: (context) => Center(child: CircularProgressIndicator()),)
                             ),
                             SizedBox(height: 50.0),
                             SizedBox(height: 180.0),

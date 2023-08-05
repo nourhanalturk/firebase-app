@@ -102,11 +102,17 @@ class LoginScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.white10,
                               ),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  LoginCubit.get(context).userLogin(email: email.text, password: password.text);
-                                },
-                                child: defaultText(text: 'Login', fontSize: 16, color: Colors.white),
+                              child: ConditionalBuilder(
+                                condition: state is !UserLoginLoadingState,
+                                builder: (BuildContext context) => MaterialButton(
+                                  onPressed: () {
+                                    LoginCubit.get(context).userLogin(email: email.text, password: password.text);
+                                  },
+                                  child: defaultText(text: 'Login', fontSize: 16, color: Colors.white),
+                                ),
+                                fallback: (BuildContext context) => Center(child: CircularProgressIndicator()),
+
+
                               ),
                             ),
                             SizedBox(height: 50.0),
